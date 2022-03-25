@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+ web:
+  build:
+   context: .
+  image: pyweb:v0.1
+  container_name: python_web
+  ports:
+   - "8000:5000"
+  volumes:
+   - ./:/app
+  networks:
+   - py-net
+
+ database:
+  image: mysql
+  container_name: mysqldb
+  ports:
+   - "3306:3306"
+  environment:
+   - MYSQL_ROOT_PASSWORD=password
+  volumes:
+   - ./mysql:/var/lib/mysql
+  networks:
+   - py-net
+
+networks:
+ py-net:
+  driver: bridge
+
+volumes:
+ mysql:
